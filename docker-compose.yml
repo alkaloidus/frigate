@@ -20,7 +20,9 @@ services:
           size: 1000000000
     ports:
       - "5000:5000"
+      - "554:554" # RTSP feeds
       - "8554:8554" # RTSP feeds
+      - "1883:1883" # RTSP feeds
       - "8555:8555/tcp" # WebRTC over tcp
       - "8555:8555/udp" # WebRTC over udp
     environment:
