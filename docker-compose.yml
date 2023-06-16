@@ -2,10 +2,14 @@ version: "3.9"
 services:
   frigate:
     container_name: frigate
-    privileged: true # this may not be necessary for all setups
+#    privileged: true # this may not be necessary for all setups
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$tzone
     restart: unless-stopped
     image: ghcr.io/blakeblackshear/frigate:stable
-    shm_size: "32mb" # update for your cameras based on calculation above
+    shm_size: "64mb" # update for your cameras based on calculation above
     #devices:
     #  - /dev/bus/usb:/dev/bus/usb # passes the USB Coral, needs to be modified for other versions
     #  - /dev/apex_0:/dev/apex_0 # passes a PCIe Coral, follow driver instructions here https://coral.ai/docs/m2/get-started/#2a-on-linux
@@ -13,7 +17,9 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${app_data}/frigate/config.yml:/config/config.yml:ro
-      - ${media}/nvr:/media/frigate
+      - ${app_data}/nvr:/media/frigate
+      - ${media}/nvr/recordings:/media/frigate/recordings
+      - ${media}/nvr/clips:/media/frigate/clips
       - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
         target: /tmp/cache
         tmpfs:
