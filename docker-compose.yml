@@ -7,7 +7,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=$tzone
-      FRIGATE_RTSP_PASSWORD: "$pass"
+      - FRIGATE_RTSP_PASSWORD="$pass"
     restart: unless-stopped
     image: ghcr.io/blakeblackshear/frigate:stable
     shm_size: "64mb" # update for your cameras based on calculation above
